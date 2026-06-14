@@ -1,0 +1,45 @@
+experiment_name: ppo-pickleball-self-play
+
+paths:
+  run_root: runs
+  unity_executable: "pohji/pickleball_rl/dp.x86_64"  
+  load_path:
+
+unity:
+  base_port: 5005
+  serve_code: 13
+  time_scale: 1
+  no_graphics: false
+  log_file: "-"
+
+env:
+  n_envs: 32
+  frame_stack: 4
+  image_size: [148, 64]
+  grayscale: false
+  action_control: 3
+  device: cuda:0
+  start_method: spawn
+
+ppo:
+  learning_rate: 0.00025
+  clip_range: 0.1
+  gamma: 0.99
+  gae_lambda: 0.95
+  ent_coef: 0.01
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  n_steps: 256
+  batch_size: 1024
+  n_epochs: 4
+  total_timesteps: 1000000000
+  multiply_timesteps_by_envs: true
+  features_dim: 512
+  extractor: impala
+
+logging:
+  video_freq: 10000
+  video_length: 1000
+  checkpoint_save_freq: 25000
+  opponent_update_rollouts: 10
+
